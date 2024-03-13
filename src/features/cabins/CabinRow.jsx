@@ -88,6 +88,7 @@ const CabinRow = ({ cabin }) => {
               <Menus.Button
                 icon={<HiOutlineSquare2Stack />}
                 onClick={handleDuplicate}
+                disabled={isCreating}
               >
                 Duplicate
               </Menus.Button>
@@ -105,9 +106,7 @@ const CabinRow = ({ cabin }) => {
               <ConfirmDelete
                 resourceName='cabins'
                 disabled={isDeleting}
-                onConfirm={() => {
-                  deleteCabin(cabinId);
-                }}
+                onConfirm={() => deleteCabin(cabinId)}
               />
             </Modal.Window>
           </Menus.Menu>

@@ -17,12 +17,13 @@ import AppLayout from "./ui/AppLayout";
 import { StyleSheetManager } from "styled-components";
 import Booking from "./pages/Booking";
 import Checkin from "./pages/Checkin";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // staleTimeLimit: 60 * 1000,
-      staleTimeLimit: 60,
+      refetchOnWindowFocus: true,
+      staleTime: Infinity,
     },
   },
 });
@@ -34,7 +35,13 @@ const App = () => {
         <GlobalStyles />
         <BrowserRouter>
           <Routes>
-            <Route element={<AppLayout />}>
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
               <Route index element={<Navigate replace to='dashboard' />} />
               <Route path='dashboard' element={<Dashboard />} />
               <Route path='bookings' element={<Bookings />} />
