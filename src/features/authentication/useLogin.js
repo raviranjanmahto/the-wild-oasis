@@ -12,7 +12,7 @@ export function useLogin() {
     onSuccess: user => {
       queryClient.setQueryData(["user"], user.user);
       toast.success("Login successful");
-      navigate("/");
+      navigate("/dashboard", { replace: true });
     },
     onError: () => toast.error("Invalid email or password"),
   });
