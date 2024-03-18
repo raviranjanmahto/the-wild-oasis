@@ -3,6 +3,8 @@ import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
 export async function getBookings({ filter, sortBy, page }) {
+  if (!Number.isSafeInteger(page) || page <= 0) return { data: [], count: 0 };
+
   let query = supabase
     .from("bookings")
     .select(
@@ -23,6 +25,7 @@ export async function getBookings({ filter, sortBy, page }) {
   if (page) query = query.range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
   const { data, error, count } = await query;
+  if (count === null) return { data: [], count: 0 };
 
   if (error) throw new Error("Bookings could not get loaded");
 
@@ -45,7 +48,7 @@ export async function getBooking(id) {
 export async function getBookingsAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
-    .select("created_at, totalPrice, extrasPrice")
+    .select("created_at, totalPrice, extrasPrice,isPaid")
     .gte("created_at", date)
     .lte("created_at", getToday({ end: true }));
 
@@ -58,7 +61,6 @@ export async function getBookingsAfterDate(date) {
 export async function getStaysAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
-    // .select('*')
     .select("*, guests(fullName)")
     .gte("startDate", date)
     .lte("startDate", getToday());

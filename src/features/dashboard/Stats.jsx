@@ -9,18 +9,21 @@ import { formatCurrency } from "../../utils/helpers";
 
 const Stats = ({ bookings, confirmStays, numDays, cabinCount }) => {
   // 1. Get number of bookings
-  const numBookings = bookings?.length;
+  const numBookings = bookings?.length || 0;
 
   // 2. Get total price
-  const sales = bookings
-    .filter(booking => booking.status === "checked-in")
-    .reduce((acc, cur) => acc + cur.totalPrice, 0);
+  const sales =
+    bookings
+      ?.filter(booking => booking.isPaid)
+      ?.reduce((acc, cur) => acc + cur.totalPrice, 0) || 0;
 
   // 3. Get number of confirm stays
-  const checkins = confirmStays?.length;
+  const checkins = confirmStays?.length || 0;
 
   // 4. Occupancy rate
-  const occupation = confirmStays.reduce((acc, cur) => acc + cur.numNights, 0);
+  const occupation =
+    confirmStays?.reduce((acc, cur) => acc + cur.numNights, 0) /
+      (numDays * cabinCount) || 0;
 
   return (
     <>
@@ -46,7 +49,7 @@ const Stats = ({ bookings, confirmStays, numDays, cabinCount }) => {
         title='Occupancy rate'
         color='yellow'
         icon={<HiOutlineChartBar />}
-        value={occupation}
+        value={Math.round(occupation * 100) + "%"}
       />
     </>
   );
