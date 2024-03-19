@@ -34,7 +34,6 @@ const App = () => {
     <DarkModeProvider>
       <StyleSheetManager shouldForwardProp={prop => prop !== "variation"}>
         <QueryClientProvider client={queryClient}>
-          <GlobalStyles />
           <BrowserRouter>
             <Routes>
               <Route

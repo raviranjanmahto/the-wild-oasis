@@ -122,7 +122,7 @@ function prepareData(startData, stays) {
   }
 
   const data = stays
-    .reduce((arr, cur) => {
+    ?.reduce((arr, cur) => {
       const num = cur.numNights;
       if (num === 1) return incArrayValue(arr, "1 night");
       if (num === 2) return incArrayValue(arr, "2 nights");
@@ -134,7 +134,7 @@ function prepareData(startData, stays) {
       if (num >= 21) return incArrayValue(arr, "21+ nights");
       return arr;
     }, startData)
-    .filter(obj => obj.value > 0);
+    ?.filter(obj => obj.value > 0);
 
   return data;
 }
