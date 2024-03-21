@@ -1,10 +1,12 @@
 import TableOperations from "../../ui/TableOperations";
 import Filter from "../../ui/Filter";
 import SortBy from "../../ui/SortBy";
+import AddCabin from "./AddCabin";
 
 const CabinTableOperations = () => {
   return (
     <TableOperations>
+      <AddCabin />
       <Filter
         filterField='discount'
         options={[

@@ -13,7 +13,6 @@ function Cabins() {
       </Row>
       <Row type='vertical'>
         <CabinTable />
-        <AddCabin />
       </Row>
     </>
   );
