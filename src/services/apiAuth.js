@@ -45,6 +45,11 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
   if (password) updateData = { password };
   if (fullName) updateData = { data: { fullName } };
 
+  // RESTRICTING TEST USER TO UPDATE
+  const { data: userData } = await supabase.auth.getUser();
+  if (userData.user.email === "test@test.com")
+    throw new Error("Test user read only!");
+
   const { data, error } = await supabase.auth.updateUser(updateData);
 
   if (error) throw new Error(error?.message);

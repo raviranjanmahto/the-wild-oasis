@@ -8,6 +8,7 @@ import Input from "../../ui/Input";
 
 import { useUser } from "./useUser";
 import { useUpdateUser } from "./useUpdateUser";
+import { toast } from "react-toastify";
 
 function UpdateUserDataForm() {
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
@@ -24,6 +25,7 @@ function UpdateUserDataForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (email === "test@test.com") return toast.error("Test user read only!");
     if (!fullName) return;
     updateUser(
       { fullName, avatar },

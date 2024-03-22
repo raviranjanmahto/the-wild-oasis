@@ -18,8 +18,9 @@ const Select = ({ options, value, onChange, ...props }) => {
   return (
     <StyledSelect value={value} onChange={onChange} {...props}>
       {options?.map(option => (
-        <option key={option.value} value={option.value}>
-          {option.label}
+        <option key={option.value || option.id} value={option.value}>
+          {option.label ||
+            `${option.name} | Max capacity-${option.maxCapacity}`}
         </option>
       ))}
     </StyledSelect>
